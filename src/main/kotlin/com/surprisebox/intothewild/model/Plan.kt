@@ -7,10 +7,10 @@ class Plan(@Id
            @GeneratedValue
            val id: Long = 0L,
            val name: String, val description: String = "",
-           val places: Collection<Place>? = null,
            val days: Int,
+           @OneToMany(fetch = FetchType.LAZY, mappedBy = "plan")
+           val places: Collection<Place>? = null,
            @ManyToOne(fetch = FetchType.LAZY)
-           @JoinColumn(name = "trip_id", nullable = false)
            val trip: Trip){
 
 }

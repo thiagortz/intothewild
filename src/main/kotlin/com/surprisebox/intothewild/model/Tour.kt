@@ -1,8 +1,6 @@
 package com.surprisebox.intothewild.model
 
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.Id
+import javax.persistence.*
 
 @Entity
 class Tour(@Id
@@ -10,6 +8,8 @@ class Tour(@Id
            val id: Long = 0L,
            val name: String,
            val description: String = "",
-           val amount: Number){
+           val amount: Number,
+           @ManyToOne(fetch = FetchType.LAZY)
+           val place: Place){
 
 }
