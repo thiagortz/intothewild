@@ -1,11 +1,6 @@
 package com.surprisebox.intothewild.model
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import com.fasterxml.jackson.annotation.JsonInclude
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.Id
-import javax.persistence.ManyToMany
+import javax.persistence.*
 
 @Entity
 class User(@Id
@@ -13,8 +8,6 @@ class User(@Id
            val id: Long = 0L,
            val name: String = "",
            val email: String = "",
-           @JsonIgnoreProperties(allowGetters = true)
            val password: String = "",
-           @JsonInclude(JsonInclude.Include.NON_NULL)
-           @ManyToMany
+           @ManyToMany(fetch = FetchType.EAGER, mappedBy = "users")
            var trips: Collection<Trip>? = null){}
