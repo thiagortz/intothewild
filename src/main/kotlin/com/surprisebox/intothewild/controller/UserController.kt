@@ -1,7 +1,6 @@
 package com.surprisebox.intothewild.controller
 
 import com.surprisebox.intothewild.dto.UserDTO
-import com.surprisebox.intothewild.mapstruct.MapUser
 import com.surprisebox.intothewild.model.Trip
 import com.surprisebox.intothewild.model.User
 import com.surprisebox.intothewild.service.TripService
@@ -22,21 +21,14 @@ class UserController{
     @Autowired
     lateinit var serviceTrip: TripService
 
-    @Autowired
-    lateinit var mapUser: MapUser
-
     @PostMapping
     fun add(@RequestBody userDTO: UserDTO) : HttpEntity<UserDTO>{
-        val user = mapUser.toModel(userDTO)
-        val newUser = mapUser.toDTO(serviceUser.save(user))
-
-        return ResponseEntity(newUser, HttpStatus.CREATED)
+        return ResponseEntity(serviceUser.save(userDTO), HttpStatus.CREATED)
     }
 
     @GetMapping("/{id}")
     fun findById(@PathVariable( "id") id: Long) : HttpEntity<UserDTO> {
-        val user = serviceUser.findById(id)
-        return HttpEntity(mapUser.toDTO(user))
+        return HttpEntity(serviceUser.findById(id))
     }
 
 
@@ -44,4 +36,5 @@ class UserController{
     fun addTrip(@PathVariable("id") id: Long, @RequestBody trip: Trip) : HttpEntity<Trip>{
         return ResponseEntity(serviceTrip.save(trip, User(id)), HttpStatus.CREATED)
     }
+
 }

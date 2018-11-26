@@ -17,5 +17,9 @@ class TripService{
         return repository.save(trip)
     }
 
+    fun findByUserId(id: Long) : Collection<Trip>{
+        return repository.findByUsersId(id)
+    }
+
 
 }

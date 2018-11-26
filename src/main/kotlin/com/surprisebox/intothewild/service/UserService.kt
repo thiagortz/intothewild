@@ -1,7 +1,7 @@
 package com.surprisebox.intothewild.service
 
-import com.surprisebox.intothewild.model.User
-import com.surprisebox.intothewild.repository.TripRepository
+import com.surprisebox.intothewild.dto.UserDTO
+import com.surprisebox.intothewild.mapstruct.MapUser
 import com.surprisebox.intothewild.repository.UserRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -12,13 +12,15 @@ class UserService{
     @Autowired
     lateinit var repository: UserRepository
 
+    @Autowired
+    lateinit var mapper: MapUser
 
-    fun save(user: User): User{
-        return repository.save(user)
+    fun save(user: UserDTO): UserDTO{
+        return mapper.toDTO(repository.save(mapper.toModel(user)))
     }
 
-    fun findById(id: Long): User {
-        return repository.findById(id).get()
+    fun findById(id: Long): UserDTO {
+        return mapper.toDTO(repository.findById(id).get())
     }
 
 }
